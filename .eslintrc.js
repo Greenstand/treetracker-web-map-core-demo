@@ -1,11 +1,14 @@
 module.exports = {
-  extends: ["universe/native", "universe/shared/typescript-analysis"],
-  overrides: [
-    {
-      files: ["*.ts", "*.tsx", "*.d.ts"],
-      parserOptions: {
-        project: "./tsconfig.json",
-      },
-    },
-  ],
+  root: true,
+  extends: ["plugin:prettier/recommended", "@react-native-community"],
+  rules: {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "parser": "flow"
+      }
+    ]
+
+  },
 };
