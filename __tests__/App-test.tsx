@@ -10,5 +10,9 @@ import App from "../App";
 import renderer from "react-test-renderer";
 
 it("renders correctly", () => {
+<<<<<<< HEAD
   renderer.create(<App />);
+=======
+	renderer.create(<App />);
+>>>>>>> dcc8350 (chore: configure prettier husky, lint-staged)
 });

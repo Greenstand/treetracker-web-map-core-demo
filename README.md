@@ -1,6 +1,5 @@
 ###### The app to demo integrating Greenstand web map
 
-
 ## Getting Started
 
 ```bash
@@ -8,7 +7,6 @@
 npm install
 
 ```
-
 
 ```bash
 # run project
