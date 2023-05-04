@@ -9,9 +9,9 @@ type Props = {
 
 const LoadUrl = ({ handleDetails, etUrl }: Props) => {
 	const injectJavascript = `
-  document.addEventListener('click', function(event) {
+		document.addEventListener('click', function(event) {
       const data =  Object.values(document.querySelector("#map-canvas").map?.map._layers).reduce((a,c) => a || c.payload?.active?c.payload:undefined, undefined)
-        window.ReactNativeWebView.postMessage(JSON.stringify(data));
+        window.ReactNativeWebView.postMessage(JSON.stringify(data))
    })
   `;
 
