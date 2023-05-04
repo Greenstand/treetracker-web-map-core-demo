@@ -4,11 +4,13 @@
 
 ```bash
 # install dependencies
-npm install
+yarn install
 
 ```
 
 ```bash
 # run project
-npm start
+yarn start
+# or
+yarn android
 ```
