@@ -1,41 +1,41 @@
 import React from "react";
-import { View, ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { WebView } from "react-native-webview";
 
 type Props = {
-	handleDetails: (event: any) => Promise<void>;
-	etUrl: string;
+  handleDetails: (event: any) => Promise<void>;
+  etUrl: string;
 };
 
 const LoadUrl = ({ handleDetails, etUrl }: Props) => {
-	const injectJavascript = `
+  const injectJavascript = `
   document.addEventListener('click', function(event) {
       const data =  Object.values(document.querySelector("#map-canvas").map?.map._layers).reduce((a,c) => a || c.payload?.active?c.payload:undefined, undefined)
         window.ReactNativeWebView.postMessage(JSON.stringify(data));
    })
   `;
 
-	return (
-		<WebView
-			source={{ uri: etUrl }}
-			injectedJavaScript={injectJavascript}
-			onMessage={handleDetails}
-			startInLoadingState={true}
-			renderLoading={() => (
-				<ActivityIndicator
-					style={{
-						position: "absolute",
-						width: "100%",
-						height: "100%",
-						justifyContent: "center",
-						alignItems: "center"
-					}}
-					size="large"
-					color="green"
-				/>
-			)}
-		/>
-	);
+  return (
+    <WebView
+      source={{ uri: etUrl }}
+      injectedJavaScript={injectJavascript}
+      onMessage={handleDetails}
+      startInLoadingState
+      renderLoading={() => (
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          size="large"
+          color="green"
+        />
+      )}
+    />
+  );
 };
 
 export default LoadUrl;

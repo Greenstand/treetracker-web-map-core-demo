@@ -1,45 +1,41 @@
 {
-	"name": "treetracker-web-map-core-demo",
-	"version": "1.0.0",
-	"main": "node_modules/expo/AppEntry.js",
-	"scripts": {
-		"start": "expo start",
-		"android": "expo start --android",
-		"ios": "expo start --ios",
-		"web": "expo start --web",
-		"lint": "eslint .",
-		"lint-fix": "eslint . --fix",
-		"prepare": "husky install"
-	},
-	"eslintConfig": {
-		"extends": "universe/native"
-	},
-	"dependencies": {
-		"@react-native-masked-view/masked-view": "0.2.8",
-		"@react-navigation/stack": "^6.3.16",
-		"expo": "~48.0.10",
-		"expo-constants": "~14.2.1",
-		"expo-status-bar": "~1.4.4",
-		"react": "18.2.0",
-		"react-native": "0.71.7",
-		"react-native-gesture-handler": "~2.9.0",
-		"react-native-webview": "11.26.0"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.20.0",
-		"@commitlint/cli": "^17.6.3",
-		"@commitlint/config-conventional": "^17.6.3",
-		"@types/react": "~18.0.14",
-		"@types/react-native-dotenv": "^0.2.0",
-		"@typescript-eslint/eslint-plugin": "^5.59.2",
-		"@typescript-eslint/parser": "^5.59.2",
-		"eslint": "^8.40.0",
-		"eslint-config-universe": "^11.2.0",
-		"husky": "^8.0.3",
-		"lint-staged": "^13.2.2",
-		"prettier": "^2.8.8",
-		"react-native-dotenv": "^3.4.8",
-		"typescript": "^4.9.4"
-	},
-	"private": true
+  "name": "treetracker-web-map-core-demo",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@react-native-masked-view/masked-view": "0.2.8",
+    "@react-navigation/stack": "^6.3.16",
+    "expo": "~48.0.10",
+    "expo-constants": "~14.2.1",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "react-native": "0.71.7",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-webview": "11.26.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@types/react": "~18.0.14",
+    "@types/react-native": "^0.72.0",
+    "@types/react-native-dotenv": "^0.2.0",
+    "eslint": "^8.40.0",
+    "eslint-config-universe": "^11.2.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "react-native-dotenv": "^3.4.8",
+    "typescript": "^4.9.4"
+  },
+  "private": true
 }
