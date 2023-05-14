@@ -1,6 +1,6 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 type CardProps = {
   setIsDisplay: (n: boolean) => void;
@@ -19,8 +19,7 @@ export default function Card({
         style={{
           flexDirection: "row-reverse",
           marginTop: 2,
-        }}
-      >
+        }}>
         <Ionicons
           name="close-circle-outline"
           size={30}
@@ -36,8 +35,7 @@ export default function Card({
           <Text
             style={{
               fontSize: 18,
-            }}
-          >
+            }}>
             {country_name}
           </Text>
         </View>

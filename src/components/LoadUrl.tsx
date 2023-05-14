@@ -1,6 +1,6 @@
 import React from "react";
+import { ActivityIndicator } from "react-native";
 import { WebView } from "react-native-webview";
-import { View, ActivityIndicator } from "react-native";
 
 type Props = {
   handleDetails: (event: any) => Promise<void>;
@@ -20,7 +20,7 @@ const LoadUrl = ({ handleDetails, etUrl }: Props) => {
       source={{ uri: etUrl }}
       injectedJavaScript={injectJavascript}
       onMessage={handleDetails}
-      startInLoadingState={true}
+      startInLoadingState
       renderLoading={() => (
         <ActivityIndicator
           style={{

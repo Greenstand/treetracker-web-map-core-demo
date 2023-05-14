@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { API_URL } from "react-native-dotenv";
-import MyStack from "./navigation/Stacks";
+import React from "react";
+
+import MyStack from "./src/navigation/Stack";
 
 const App = () => {
   return (
