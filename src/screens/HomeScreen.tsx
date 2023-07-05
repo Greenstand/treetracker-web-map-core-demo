@@ -27,7 +27,7 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <LoadUrl
         handleDetails={handleDetails}
-        etUrl="https://beta-map.treetracker.org/?embed=true"
+        etUrl="https://alpha-dev.treetracker.org/"
       />
       {isDisplay && (
         <Card
