@@ -17,6 +17,8 @@ import expo.modules.ReactNativeHostWrapper;
 
 import java.util.List;
 
+import android.webkit.WebView;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -66,6 +68,8 @@ public class MainApplication extends Application implements ReactApplication {
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
+  
+    WebView.setWebContentsDebuggingEnabled(true);
   }
 
   @Override
