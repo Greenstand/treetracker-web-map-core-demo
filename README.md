@@ -4,13 +4,23 @@
 ## Getting Started
 
 ```bash
-# install dependencies
-npm install
+# Install dependencies
+- npm install
 
 ```
 
+```bash
+# Build your native Android project
+- npx expo run:android
+
+# or
+
+# Build your native Ios  project
+ - npx expo run:ios
+```
 
 ```bash
-# run project
-npm start
+# Run the project
+
+- npm start
 ```
