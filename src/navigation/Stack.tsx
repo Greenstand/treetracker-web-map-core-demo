@@ -5,10 +5,12 @@ import AuthContext from "../context/AuthContext";
 import HomeScreen from "../screens/HomeScreen";
 import SignInScreen from "../screens/SignInScreen";
 import SplashScreen from "../screens/SplashScreen";
+import NotificationScreen from "../screens/NotificationScreen";
 
 type AuthStackParams = {
   Home: undefined;
   SignIn: undefined;
+  Notification: undefined;
 };
 
 const StackNavigation = createStackNavigator<AuthStackParams>();
@@ -94,7 +96,11 @@ export default function MyStack() {
             component={SignInScreen}
           />
         ) : (
-          <StackNavigation.Screen name="Home" component={HomeScreen} />
+          <>
+            <StackNavigation.Screen name="Home" component={HomeScreen} />
+            <StackNavigation.Screen name="Notification" component={NotificationScreen} />
+          </>
+
         )}
       </StackNavigation.Navigator>
     </AuthContext.Provider>
