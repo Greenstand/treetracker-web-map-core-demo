@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "treetracker-web-map-core-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Greenstand/treetracker-web-map-core-demo.git",
+  "author": "dadiorchen <antlet2004@gmail.com>",
+  "license": "MIT",
+  "workspaces": {
+    "packages": ["apps/*", "packages/*"],
+    "nohoist": ["treetracker-web-map-core-demo-native/**"]
+  }
+}
