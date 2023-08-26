@@ -3,11 +3,11 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { Wallet } from '../../models/entities/Wallet';
-import formatWalletName from '../../models/wallet/formatWalletName';
-import shortenUuid from '../../models/common/shortenUuid';
-import { Token } from '../../models/entities/Token';
-import useTransferWizard from '../../models/transfer/useTransferWizard';
+import { Wallet } from 'demo-core/models/entities/Wallet';
+import formatWalletName from 'demo-core/models/wallet/formatWalletName';
+import shortenUuid from 'demo-core/models/common/shortenUuid';
+import { Token } from 'demo-core/models/entities/Token';
+import useTransferWizard from 'demo-core/models/transfer/useTransferWizard';
 
 export default function Wallet() {
   const [currentWallet, setCurrentWallet] = useState<Wallet | null>(null);

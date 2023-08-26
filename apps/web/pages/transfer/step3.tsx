@@ -13,9 +13,9 @@ import Celebration from '@mui/icons-material/Celebration';
 import { faker } from '@faker-js/faker';
 import { ArrowDownward } from '@mui/icons-material';
 import React from 'react';
-import { Wallet } from '../../models/entities/Wallet';
+import { Wallet } from 'demo-core/models/entities/Wallet';
 import { useRecoilState } from 'recoil';
-import useTransferWizard from '../../models/transfer/useTransferWizard';
+import useTransferWizard from 'demo-core/models/transfer/useTransferWizard';
 import WalletInput from '../../components/WalletInput';
 import { useRouter } from 'next/router';
 

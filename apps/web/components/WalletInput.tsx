@@ -1,6 +1,6 @@
 import React from 'react';
-import * as wallets from '../models/api/wallets';
-import { Wallet } from '../models/entities/Wallet';
+import * as wallets from 'demo-core/models/api/wallets';
+import { Wallet } from 'demo-core/models/entities/Wallet';
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 
 export default function WalletInput({

@@ -1,5 +1,5 @@
 import { RecoilState, atom } from 'recoil';
-import { User } from '../models/user/User';
+import { User } from 'demo-core/models/user/User';
 
 const currentUser: RecoilState<User | null> = atom<User | null>({
   key: 'currentUser',
