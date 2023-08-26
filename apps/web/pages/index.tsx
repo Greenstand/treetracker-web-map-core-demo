@@ -20,7 +20,7 @@ import useLoginForm from 'demo-core/models/login/useLoginForm';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const loginForm = useLoginForm(react);
+  const loginForm = useLoginForm();
   const [user, setUser] = useRecoilState(currentUser);
 
   return (

@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import { login } from '../api/accounts';
 import { User } from '../user/User';
 
-export default function useLoginForm(react) {
-  const [name, setName] = react.useState('');
-  const [nameError, setNameError] = react.useState('');
-  const [password, setPassword] = react.useState('');
-  const [passwordError, setPasswordError] = react.useState('');
-  const [isSubmitting, setIsSubmitting] = react.useState(false);
+export default function useLoginForm() {
+  const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleNameChange(newValue: string) {
     setName(newValue);

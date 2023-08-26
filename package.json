@@ -7,11 +7,6 @@
   "author": "dadiorchen <antlet2004@gmail.com>",
   "license": "MIT",
   "workspaces": {
-    "packages": ["apps/*", "packages/*"],
-    "nohoist": [
-      "treetracker-web-map-core-demo-native/**", 
-      "treetracker-web-map-core-demo-web/**",
-      "demo-core/**"
-    ]
+    "packages": ["apps/*", "packages/*"]
   }
 }
