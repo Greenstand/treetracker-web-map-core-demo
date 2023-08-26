@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 
-import Card from "../components/Card";
 import LoadUrl from "../components/LoadUrl";
 
 export default function WebViewScreen() {
@@ -29,13 +28,6 @@ export default function WebViewScreen() {
         handleDetails={handleDetails}
         etUrl="https://beta-map.treetracker.org/?embed=true"
       />
-      {isDisplay && (
-        <Card
-          setIsDisplay={setIsDisplay}
-          country_name={treeData.country_name}
-          image_url={treeData.image_url}
-        />
-      )}
     </SafeAreaView>
   );
 }

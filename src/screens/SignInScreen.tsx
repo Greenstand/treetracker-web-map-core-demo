@@ -1,13 +1,13 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 
 import CustomButton from "../components/common/CustomButton";
 import CustomInput from "../components/common/CustomInput";
 import CustomText from "../components/common/CustomText";
 import CustomTitle from "../components/common/CustomTitle";
 import PressableOpacity from "../components/common/PressableOpacity";
-import AuthContext from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { sharedStyles } from "../styles/styles";
 import theme from "../utils/theme";
 
@@ -21,20 +21,18 @@ interface FormData {
 type AuthStackParams = {
   Home: undefined;
   SignIn: undefined;
-  Chat: undefined;
 };
 
 export default function SignInScreen({
   navigation,
 }: StackScreenProps<AuthStackParams, "SignIn">) {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    password: "",
+    name: "a",
+    password: "a",
     nameError: false,
     passwordError: false,
   });
-
-  const { signIn } = React.useContext(AuthContext);
+  const { signIn } = useAuth();
 
   const handleInputChange = (name: keyof FormData, value: string) => {
     setFormData((prevFormData) => ({
@@ -63,10 +61,10 @@ export default function SignInScreen({
   };
 
   return (
-    <View
+    <SafeAreaView
       style={[sharedStyles.container, { backgroundColor: theme.colors.white }]}>
       <View style={styles.wrapper}>
-        <CustomTitle title="Sign In" />
+        <CustomTitle>Sign In</CustomTitle>
       </View>
       <CustomInput
         label="Name"
@@ -101,7 +99,7 @@ export default function SignInScreen({
           </CustomText>
         </PressableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
