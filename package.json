@@ -8,6 +8,10 @@
   "license": "MIT",
   "workspaces": {
     "packages": ["apps/*", "packages/*"],
-    "nohoist": ["treetracker-web-map-core-demo-native/**", "treetracker-web-map-core-demo-web/**"]
+    "nohoist": [
+      "treetracker-web-map-core-demo-native/**", 
+      "treetracker-web-map-core-demo-web/**",
+      "demo-core/**"
+    ]
   }
 }

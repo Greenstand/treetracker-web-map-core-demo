@@ -14,12 +14,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import currentUser from '../states/currentUser';
-import { User } from '../models/user/User';
-import useLoginForm from '../models/login/useLoginForm';
+import { User } from 'demo-core/models/user/User';
+import react from 'react';
+import useLoginForm from 'demo-core/models/login/useLoginForm';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const loginForm = useLoginForm();
+  const loginForm = useLoginForm(react);
   const [user, setUser] = useRecoilState(currentUser);
 
   return (
