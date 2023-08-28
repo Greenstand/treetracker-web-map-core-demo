@@ -1,12 +1,29 @@
+import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
-import React from "react";
-import { StyleSheet, View, SafeAreaView, FlatList } from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Platform,
+  SafeAreaView,
+} from "react-native";
 
 import TransactionCard from "../components/TransactionCard";
 import WalletCard from "../components/WalletCard";
 import WalletSummary from "../components/WalletSummary";
 import CardsHeading from "../components/common/CardsHeading";
 import { HEIGHT, height } from "../styles/styles";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 const wallets = [
   {
@@ -58,7 +75,76 @@ const transactions = [
 function Wrapper(props: any) {
   return <View style={styles.wrapper}>{props.children}</View>;
 }
+
 export default function HomeScreen() {
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
+  const [notification, setNotification] = useState<any>(false);
+
+  const navigation = useNavigation<any>();
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig?.extra?.eas.projectId,
+      });
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  }
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token: any) => {
+      console.log(token, ": token registered");
+      setExpoPushToken(token.data);
+    });
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+        console.log("Noti received:", notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("noti response received", response);
+        navigation.navigate("Notification", {
+          notification: response.notification,
+        });
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current,
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Wrapper>
