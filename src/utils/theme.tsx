@@ -7,6 +7,7 @@ const theme = {
     grey: "#6C6B76",
     white: "#FFFFFF",
     red: "red",
+    solitude: "#F1F5FF",
   },
 };
 

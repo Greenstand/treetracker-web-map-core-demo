@@ -11,6 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "androidStatusBar": {
+    "backgroundColor": "#feee",
+    "barStyle": "dark-content",
+    "translucent": true,
+    "hidden": false
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
