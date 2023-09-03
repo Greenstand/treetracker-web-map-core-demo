@@ -145,3 +145,31 @@ export const TermIcon = (props: any) => (
     </Defs>
   </Svg>
 );
+
+export const ArrowLeft = (props: any) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={21}
+    height={21}
+    fill="none"
+    {...props}>
+    <Path
+      fill="#0D1028"
+      d="m10.5 0 1.857 1.857-7.33 7.33H21v2.626H5.027l7.33 7.33L10.5 21 0 10.5 10.5 0Z"
+    />
+  </Svg>
+);
+
+export const ArrowDown = (props: any) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={25}
+    height={25}
+    fill="none"
+    {...props}>
+    <Path
+      fill="#9597A2"
+      d="m0 12.5 2.211-2.21 8.726 8.726V0h3.126v19.016l8.726-8.727L25 12.5 12.5 25 0 12.5Z"
+    />
+  </Svg>
+);

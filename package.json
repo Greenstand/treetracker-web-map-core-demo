@@ -12,12 +12,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@react-native-masked-view/masked-view": "0.2.8",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/material-bottom-tabs": "^6.2.16",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.16",
-    "expo": "^48.0.10",
+    "expo": "~48.0.10",
+    "expo-asset": "^8.10.1",
     "expo-constants": "~14.2.1",
     "expo-device": "^5.4.0",
     "expo-notifications": "^0.20.1",
