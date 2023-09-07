@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
