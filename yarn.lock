@@ -1616,23 +1616,6 @@
   resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-48.0.0.tgz#15a46921565ffeda3c3ba010701398f05193d5b3"
   integrity sha512-DwyV4jTy/+cLzXGAo1xftS6mVlSiLIWZjl9DjTCLPFVgNYQxnh7htPilRv4rBhiNs7KaznWqKU70+4zQoKVT9A==
 
-"@expo/config@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-8.0.0.tgz#59d15cf0b42e2a0c1b54d161eafe9201b388d55f"
-  integrity sha512-fBetLTMfkOlcuyHpHant2bVpn53wStlfZuRLzRCL12CZTlzEdKd3oumhLUlaOWSNanXImkc/uJx45wZdUdB2zA==
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "~6.0.0"
-    "@expo/config-types" "^48.0.0"
-    "@expo/json-file" "^8.2.37"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    require-from-string "^2.0.2"
-    resolve-from "^5.0.0"
-    semver "7.3.2"
-    slugify "^1.3.4"
-    sucrase "^3.20.0"
-
 "@expo/config@8.0.5", "@expo/config@~8.0.0":
   version "8.0.5"
   resolved "https://registry.yarnpkg.com/@expo/config/-/config-8.0.5.tgz#71380a7a20f2e27fe386d7bb73428a437b27a96b"

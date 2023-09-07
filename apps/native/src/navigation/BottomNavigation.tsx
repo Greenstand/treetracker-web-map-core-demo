@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 
 import { HomeIcon, OfferIcon, TermIcon, WalletIcon } from "../components/Icons";
