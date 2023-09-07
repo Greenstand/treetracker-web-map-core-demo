@@ -1,0 +1,40 @@
+{
+  "name": "treetracker-web-map-core-demo-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@faker-js/faker": "^8.0.2",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.3",
+    "@svgr/webpack": "8.0.1",
+    "axios": "^1.4.0",
+    "moment": "^2.29.4",
+    "next": "13.4.12",
+    "prettier": "^3.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "recoil": "^0.7.7",
+    "url-loader": "^4.1.1",
+    "demo-core": "1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.5",
+    "@types/react": "18.2.17",
+    "@types/react-dom": "18.2.7",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.12",
+    "typescript": "5.1.6"
+  }
+}
