@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
