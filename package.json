@@ -6,7 +6,18 @@
   "repository": "git@github.com:Greenstand/treetracker-web-map-core-demo.git",
   "author": "dadiorchen <antlet2004@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
   "workspaces": {
-    "packages": ["apps/*", "packages/*"]
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "husky": "^8.0.3"
   }
 }
