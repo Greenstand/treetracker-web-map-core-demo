@@ -12,14 +12,14 @@ yarn
 * Start web demo:
 
 ```bash
-cd packages/web
+cd apps/web
 yarn dev
 ```
 
 * Start native demo:
 
 ```bash
-cd packages/native
+cd apps/native
 yarn start
 ```
 
