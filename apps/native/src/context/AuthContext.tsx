@@ -1,5 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useState, useContext, ReactNode } from "react";
-
 type AuthContextType = {
   userToken: string | null;
   signIn: () => void;
@@ -15,10 +15,17 @@ type AuthProviderProps = {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [userToken, setUserToken] = useState<string | null>(null);
 
-  const signIn = () => {
-    // Simulating a successful signIn by setting a dummy user token
-    const dummyToken = "dummyToken123";
-    setUserToken(dummyToken);
+  const signIn = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      console.log("token:", token);
+      if (token !== null) {
+        setUserToken(JSON.stringify(token));
+      }
+    } catch (error) {
+      console.log(error);
+      console.error("Error checking authentication:", error);
+    }
   };
 
   const signOut = () => {

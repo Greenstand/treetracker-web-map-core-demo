@@ -5,26 +5,31 @@ import { View, StyleSheet, Text } from "react-native";
 import { HEIGHT, WIDTH } from "../styles/styles";
 import theme from "../utils/theme";
 
-export default function WalletCard({ createdAt, balance, name, active }: any) {
+export default function WalletCard({
+  createdAt,
+  balance,
+  name,
+  active,
+  id,
+}: any) {
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: active ? theme.colors.main : theme.colors.solitude },
+        {
+          backgroundColor:
+            active === id ? theme.colors.main : theme.colors.solitude,
+        },
       ]}>
       <View style={styles.content}>
-        <Ionicons
-          name="map-sharp"
-          size={24}
-          color={active ? theme.colors.white : theme.colors.black}
-        />
+        <Ionicons name="md-map-sharp" size={24} color={theme.colors.black} />
         <View>
           <Text
             style={[
               styles.text,
               {
                 fontSize: 16,
-                color: active ? theme.colors.white : theme.colors.black,
+                color: active === id ? theme.colors.white : theme.colors.black,
               },
             ]}>
             Token: {balance}
@@ -34,7 +39,7 @@ export default function WalletCard({ createdAt, balance, name, active }: any) {
               styles.text,
               {
                 fontSize: 14,
-                color: active ? theme.colors.white : theme.colors.grey,
+                color: active === id ? theme.colors.white : theme.colors.grey,
               },
             ]}>
             {createdAt}
@@ -47,7 +52,7 @@ export default function WalletCard({ createdAt, balance, name, active }: any) {
               styles.textUppercase,
               {
                 fontSize: 12,
-                color: active ? theme.colors.white : theme.colors.grey,
+                color: active === id ? theme.colors.white : theme.colors.grey,
               },
             ]}>
             wallet
@@ -57,7 +62,7 @@ export default function WalletCard({ createdAt, balance, name, active }: any) {
               styles.text,
               {
                 fontSize: 16,
-                color: active ? theme.colors.white : theme.colors.black,
+                color: active === id ? theme.colors.white : theme.colors.black,
               },
             ]}>
             {name}
@@ -88,5 +93,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     padding: 20,
+    zIndex: 0,
   },
 });
