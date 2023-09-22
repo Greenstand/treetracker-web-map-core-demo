@@ -8,7 +8,7 @@ export default function TransactionCard({ name, date, avatar, token }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image source={avatar} style={sharedStyles.avatar} />
+        <Image source={{ uri: avatar }} style={sharedStyles.avatar} />
         <View style={styles.wrapper}>
           <View>
             <Text style={styles.text}>{name}</Text>

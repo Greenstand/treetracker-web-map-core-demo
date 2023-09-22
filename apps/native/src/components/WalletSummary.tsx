@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ImageSourcePropType,
-} from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 import { NotificationIcon, SearchIcon } from "./Icons";
 import { sharedStyles } from "../styles/styles";
@@ -15,12 +9,12 @@ export default function WalletSummary({
   balance,
   avatar,
 }: {
-  balance: string;
-  avatar: ImageSourcePropType;
+  balance: number;
+  avatar: string | undefined;
 }) {
   return (
     <View style={styles.container}>
-      <Image source={avatar} style={sharedStyles.avatar} />
+      <Image source={{ uri: avatar }} style={sharedStyles.avatar} />
       <View style={styles.wrapper}>
         <Text
           style={[

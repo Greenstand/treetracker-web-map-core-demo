@@ -1,14 +1,25 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import useLoginForm from "demo-core/models/login/useLoginForm";
+import { User } from "demo-core/models/user/User";
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { useRecoilState } from "recoil";
 
-import CustomButton from "../components/common/CustomButton";
 import CustomInput from "../components/common/CustomInput";
 import CustomLabel from "../components/common/CustomLabel";
 import CustomText from "../components/common/CustomText";
 import CustomTitle from "../components/common/CustomTitle";
 import PressableOpacity from "../components/common/PressableOpacity";
 import { useAuth } from "../context/AuthContext";
+import currentUser from "../states/currentUser";
 import { sharedStyles } from "../styles/styles";
 import theme from "../utils/theme";
 
@@ -27,38 +38,20 @@ type AuthStackParams = {
 export default function SignInScreen({
   navigation,
 }: StackScreenProps<AuthStackParams, "SignIn">) {
-  const [formData, setFormData] = useState<FormData>({
-    name: "a",
-    password: "a",
-    nameError: false,
-    passwordError: false,
-  });
+  const loginForm = useLoginForm();
+  const [user, setUser] = useRecoilState(currentUser);
   const { signIn } = useAuth();
 
-  const handleInputChange = (name: keyof FormData, value: string) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-      [`${name}Error`]: false,
-    }));
-  };
-
   const handleSubmit = () => {
-    if (formData.name.trim() === "") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        nameError: true,
-      }));
-    }
-    if (formData.password.trim() === "") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        passwordError: true,
-      }));
-    }
-    if (formData.name.trim() !== "" && formData.password.trim() !== "") {
-      signIn();
-    }
+    loginForm.handleSubmit(async (user: User) => {
+      setUser(user);
+      try {
+        await AsyncStorage.setItem("userToken", user?.token);
+        signIn();
+      } catch (e) {
+        // saving error
+      }
+    });
   };
 
   return (
@@ -70,32 +63,33 @@ export default function SignInScreen({
       <View style={styles.container}>
         <CustomLabel label="Name" style={styles.label} />
         <CustomInput
-          value={formData.name}
+          value={loginForm.name}
           inputStyle={styles.input}
           errorTextStyle={styles.errorText}
-          onChangeText={(text) => handleInputChange("name", text)}
-          error={formData.nameError}
+          onChangeText={(text) => loginForm.handleNameChange(text)}
+          error={!!loginForm.nameError}
           errorMessage="Name is required"
         />
       </View>
       <View style={styles.container}>
         <CustomLabel label="Password" style={styles.label} />
         <CustomInput
-          value={formData.password}
+          value={loginForm.password}
           inputStyle={styles.input}
           errorTextStyle={styles.errorText}
-          onChangeText={(text) => handleInputChange("password", text)}
+          onChangeText={(text) => loginForm.handlePasswordChange(text)}
           secureTextEntry
-          error={formData.passwordError}
-          errorMessage="Password is required"
+          error={!!loginForm.passwordError}
+          errorMessage={loginForm.passwordError}
         />
       </View>
-      <CustomButton
-        style={styles.button}
-        buttonTextStyle={styles.buttonText}
-        title="Sign In"
-        onPress={handleSubmit}
-      />
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        {loginForm.isSubmitting ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Sign In </Text>
+        )}
+      </TouchableOpacity>
       <View style={styles.wrapper}>
         <PressableOpacity
           style={styles.pressable}

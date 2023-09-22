@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
+import useTab from "demo-core/models/common/useTab";
+import { Wallet } from "demo-core/models/entities/Wallet";
+import useTransactionList from "demo-core/models/transaction/useTransactionList";
+import useBalance from "demo-core/models/user/useBalance";
+import useWalletList from "demo-core/models/wallet/useWalletList";
 import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
@@ -9,12 +15,15 @@ import {
   FlatList,
   Platform,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
+import { useRecoilState } from "recoil";
 
 import TransactionCard from "../components/TransactionCard";
 import WalletCard from "../components/WalletCard";
 import WalletSummary from "../components/WalletSummary";
 import CardsHeading from "../components/common/CardsHeading";
+import currentUser from "../states/currentUser";
 import { HEIGHT, height } from "../styles/styles";
 
 Notifications.setNotificationHandler({
@@ -25,58 +34,19 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const wallets = [
-  {
-    id: 1,
-    createdAt: "June 23, 2022",
-    balance: "285",
-    name: "Samwell A",
-    active: true,
-  },
-  {
-    id: 2,
-    createdAt: "June 23, 2022",
-    balance: "83,509",
-    name: "Samwell A",
-    active: false,
-  },
-];
-const transactions = [
-  {
-    id: 1,
-    avatar: require("../../assets/Profile.png"),
-    name: "Samwell A.",
-    date: "10 Apr, 2023",
-    token: "83,509",
-  },
-  {
-    id: 2,
-    avatar: require("../../assets/Profile.png"),
-    name: "Samwell A.",
-    date: "10 Apr, 2023",
-    token: "83,509",
-  },
-  {
-    id: 3,
-    avatar: require("../../assets/Profile.png"),
-    name: "Samwell A.",
-    date: "10 Apr, 2023",
-    token: "83,509",
-  },
-  {
-    id: 4,
-    avatar: require("../../assets/Profile.png"),
-    name: "Samwell A.",
-    date: "10 Apr, 2023",
-    token: "83,509",
-  },
-];
-
 function Wrapper(props: any) {
   return <View style={styles.wrapper}>{props.children}</View>;
 }
 
 export default function HomeScreen() {
+  const [user, setUser] = useRecoilState(currentUser);
+
+  const balance = useBalance(user?.userId);
+  const walletList = useWalletList(user?.userId);
+  const tab = useTab<Wallet>(walletList.list);
+  const transactionList = useTransactionList(tab.activeTabItem?.id);
+  const [activeItem, setActiveItem] = useState<string>("");
+
   const [expoPushToken, setExpoPushToken] = useState("");
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
@@ -112,6 +82,10 @@ export default function HomeScreen() {
     };
   }, []);
 
+  const handleItemPress = (item: any) => {
+    setActiveItem(item.id);
+  };
+
   async function registerForPushNotificationsAsync() {
     let token;
     if (Device.isDevice) {
@@ -144,6 +118,9 @@ export default function HomeScreen() {
 
     return token;
   }
+  useEffect(() => {
+    setActiveItem(walletList.list[0]?.id);
+  }, [walletList.list[0]?.id]);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token: any) => {
@@ -176,10 +153,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Wrapper>
-        <WalletSummary
-          balance="4,830.00"
-          avatar={require("../../assets/Profile.png")}
-        />
+        <WalletSummary balance={balance} avatar={user?.avatar} />
       </Wrapper>
       <Wrapper>
         <CardsHeading heading="Wallet" />
@@ -189,16 +163,21 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContainer}
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={wallets}
+        data={walletList?.list}
         renderItem={({ item }: any) => (
-          <WalletCard
-            createdAt={item.createdAt}
-            balance={item.balance}
-            name={item.name}
-            active={item.active}
-          />
+          <TouchableOpacity onPress={() => handleItemPress(item)}>
+            <WalletCard
+              createdAt={moment(item.createdAt).format("MMM DD, YYYY")}
+              balance={item.balance}
+              name={item.name}
+              active={activeItem}
+              id={item.id}
+            />
+          </TouchableOpacity>
         )}
         keyExtractor={(item): any => item.id}
+        onEndReachedThreshold={0.2}
+        initialNumToRender={10}
       />
       <View>
         <Wrapper>
@@ -207,7 +186,7 @@ export default function HomeScreen() {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={transactions}
+          data={transactionList?.list}
           style={{
             height: height * (1 / 3),
             flexGrow: 0,
@@ -215,14 +194,16 @@ export default function HomeScreen() {
           renderItem={({ item }: any) => (
             <Wrapper>
               <TransactionCard
-                avatar={item.avatar}
-                name={item.name}
-                date={item.date}
-                token={item.token}
+                avatar={item.senderAvatar}
+                name={item.senderName}
+                date={moment(item.createdAt).format("MMM DD, YYYY")}
+                token={item.amount}
               />
             </Wrapper>
           )}
           keyExtractor={(item): any => item.id}
+          onEndReachedThreshold={0.2}
+          initialNumToRender={10}
         />
       </View>
     </SafeAreaView>
