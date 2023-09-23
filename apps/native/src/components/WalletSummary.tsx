@@ -1,5 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import { NotificationIcon, SearchIcon } from "./Icons";
 import { sharedStyles } from "../styles/styles";
@@ -12,9 +13,13 @@ export default function WalletSummary({
   balance: number;
   avatar: string | undefined;
 }) {
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
-      <Image source={{ uri: avatar }} style={sharedStyles.avatar} />
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <Image source={{ uri: avatar }} style={sharedStyles.avatar} />
+      </TouchableOpacity>
       <View style={styles.wrapper}>
         <Text
           style={[
