@@ -33,7 +33,7 @@ yarn start
 
 # Development Rules for this project
 
-- The files in the `packages/demo-core` folder (the model layer) can import any other files in the `models` folder.
+- The files in the `packages/demo-core` folder (the model layer) can import any other files in the same folder.
 
 - The files in the `packages/demo-core` folder can not import files under `apps` (the viewer layer).
 
