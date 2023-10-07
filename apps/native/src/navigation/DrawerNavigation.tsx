@@ -4,7 +4,6 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
-import { Asset } from "expo-asset";
 import React from "react";
 import {
   View,
@@ -14,6 +13,7 @@ import {
   Image,
   Dimensions,
 } from "react-native";
+import { useRecoilState } from "recoil";
 
 import BottomNavigation from "./BottomNavigation";
 import {
@@ -29,10 +29,12 @@ import PasswordScreen from "../screens/PasswordScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import TransactionScreen from "../screens/TransactionScreen";
 import WalletsScreen from "../screens/WalletsScreen";
+import currentUser from "../states/currentUser";
 import theme from "../utils/theme";
 
 function CustomDrawer(props: any) {
-  const profileURI = Asset.fromModule(require("../../assets/profile2.png")).uri;
+  const [user] = useRecoilState(currentUser);
+  const profileURI = user?.avatar;
 
   return (
     <View style={{ flex: 1, backgroundColor: "grey" }}>
@@ -60,8 +62,14 @@ function CustomDrawer(props: any) {
         </View>
         <View style={drawerStyle.itemContainer}>
           <Image source={{ uri: profileURI }} style={profileStyle.image} />
-          <Text style={profileStyle.txtMajor}>Lisa Anderson</Text>
-          <Text style={profileStyle.txtMinor}>lisa.anderson@gmail.com</Text>
+          <Text
+            style={
+              profileStyle.txtMajor
+            }>{`${user?.firstName} ${user?.lastName}`}</Text>
+          <Text
+            style={
+              profileStyle.txtMinor
+            }>{`${user?.firstName.toLowerCase()}.${user?.lastName.toLowerCase()}@gmail.com`}</Text>
         </View>
         <View style={drawerStyle.itemContainer}>
           <DrawerItemList {...props} />
