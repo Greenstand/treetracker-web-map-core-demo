@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -19,64 +19,58 @@ import PasswordRoundedIcon from '../images/Key.svg';
 import SettingsIcon from '../images/Settings.svg';
 
 const Navbar = ({ user, open, toggleDrawer }) => {
+  const [lg, set_lg] = useState(window.innerWidth >= 787);
+  const [xl, set_xl] = useState(window.innerWidth >= 1250);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      set_lg(window.innerWidth >= 787);
+      set_xl(window.innerWidth >= 1250);
+    });
+  }, []);
+
   return (
     <>
-      <Grid
-        sx={{
-          width: '100vw',
-          backgroundColor: '#fff',
+      <div
+        style={{
+          width: xl ? '30vw' : lg ? '45vw' : '100vw',
           height: '10vh',
-          elevation: 30,
+          backgroundColor: '#fff',
           zIndex: 1201,
           position: 'fixed',
-          top: open ? '0' : '-10vh',
-          transition: 'all 0.25s',
-        }}
-        container
-        rowSpacing={3}
-        style={{
+          top: lg ? '0' : open ? '0' : '-10vh',
+          left: xl ? (open ? '0' : '-30vw') : lg ? (open ? '0' : '-45vw') : '0',
           display: 'flex',
-          alignItems: 'flex-end',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          transition: 'all 0.3s',
+          padding: '16px',
         }}
       >
-        <Grid
-          item
-          xs={2}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+        <IconButton onClick={toggleDrawer} size="small">
+          <CloseRoundedIcon sx={{ color: '#000', fontSize: '14px' }} />
+        </IconButton>
+        <Typography sx={{ textAlign: 'center', fontSize: '22px' }} variant="h4">
+          Profile
+        </Typography>
+        <IconButton size="small">
+          <LogoutRoundedIcon sx={{ color: '#000', fontSize: '14px' }} />
+        </IconButton>
+      </div>
+      <Drawer
+        variant="temporary"
+        open={open}
+        onClose={toggleDrawer}
+        transitionDuration={300}
+      >
+        <Box
+          sx={{
+            width: xl ? '30vw' : lg ? '45vw' : '70vw',
+            marginTop: '10vh',
+            paddingLeft: 7,
           }}
         >
-          <IconButton onClick={toggleDrawer} size="large">
-            <CloseRoundedIcon fontSize="large" sx={{ color: '#000' }} />
-          </IconButton>
-        </Grid>
-        <Grid
-          item
-          xs={8}
-          sx={{ textAlign: 'center' }}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography
-            sx={{ width: '100%', height: '5vh', textAlign: 'center' }}
-            variant="h4"
-          >
-            Profile
-          </Typography>
-        </Grid>
-        <Grid xs={2} sx={{ paddingBottom: 1 }}>
-          <IconButton size="large">
-            <LogoutRoundedIcon fontSize="large" sx={{ color: '#000' }} />
-          </IconButton>
-        </Grid>
-      </Grid>
-      <Drawer variant="temporary" open={open} onClose={toggleDrawer}>
-        <Box sx={{ width: '70vw', marginTop: '10vh', paddingLeft: 7 }}>
           <Avatar
             src={user.avatar}
             sx={{
