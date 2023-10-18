@@ -1,7 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
+import { Map } from "./Icons";
 import { HEIGHT, WIDTH } from "../styles/styles";
 import theme from "../utils/theme";
 
@@ -22,7 +22,7 @@ export default function WalletCard({
         },
       ]}>
       <View style={styles.content}>
-        <Ionicons name="md-map-sharp" size={24} color={theme.colors.black} />
+        <Map />
         <View>
           <Text
             style={[

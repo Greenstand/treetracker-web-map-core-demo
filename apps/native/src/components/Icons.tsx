@@ -257,3 +257,24 @@ export const Gear = (props: any) => (
     />
   </Svg>
 );
+
+export const Map = (props: any) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={30}
+    height={30}
+    fill="none"
+    {...props}>
+    <G clipPath="url(#a)">
+      <Path
+        fill="#474B4F"
+        d="m25.625 3.75-.2.038-6.675 2.587-7.5-2.625L4.2 6.125a.63.63 0 0 0-.45.6v18.9c0 .35.275.625.625.625l.2-.038 6.675-2.587 7.5 2.625 7.05-2.375a.63.63 0 0 0 .45-.6v-18.9a.619.619 0 0 0-.625-.625Zm-6.875 20-7.5-2.637V6.25l7.5 2.637V23.75Z"
+      />
+    </G>
+    <Defs>
+      <ClipPath id="a">
+        <Path fill="#fff" d="M0 0h30v30H0z" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
