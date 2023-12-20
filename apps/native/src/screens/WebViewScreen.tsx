@@ -24,10 +24,10 @@ export default function WebViewScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <LoadUrl
+      {/* <LoadUrl
         handleDetails={handleDetails}
         etUrl="https://beta-map.treetracker.org/?embed=true"
-      />
+      /> */}
     </SafeAreaView>
   );
 }

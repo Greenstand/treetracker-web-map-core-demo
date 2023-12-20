@@ -51,10 +51,23 @@ export default function HomeScreen() {
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
   const [notification, setNotification] = useState<any>(false);
+  const [pickedImgArr, setArr] = useState([] as number[]);
 
   const navigation = useNavigation<any>();
 
+  function getRandomNumber() {
+    return Math.floor(Math.random() * 37 + 2);
+  }
+
+  const imgArr = [] as number[];
+
+  while (imgArr.length < 10) {
+    const randomNum = getRandomNumber();
+    if (imgArr.indexOf(randomNum) === -1) imgArr.push(randomNum);
+  }
+
   useEffect(() => {
+    setArr([...imgArr]);
     registerForPushNotificationsAsync().then((token: any) => {
       console.log(token, ": token registered");
       setExpoPushToken(token.data);
@@ -84,6 +97,7 @@ export default function HomeScreen() {
 
   const handleItemPress = (item: any) => {
     setActiveItem(item.id);
+    navigation.navigate("Wallet");
   };
 
   async function registerForPushNotificationsAsync() {
@@ -191,10 +205,15 @@ export default function HomeScreen() {
             height: height * (1 / 3),
             flexGrow: 0,
           }}
-          renderItem={({ item }: any) => (
+          renderItem={({ item, index }: any) => (
             <Wrapper>
               <TransactionCard
                 avatar={item.senderAvatar}
+                backUpImg={
+                  pickedImgArr[index + 1] !== undefined
+                    ? pickedImgArr[index + 1]
+                    : 0
+                }
                 name={item.senderName}
                 date={moment(item.createdAt).format("MMM DD, YYYY")}
                 token={item.amount}

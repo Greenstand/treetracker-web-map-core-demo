@@ -4,18 +4,18 @@
     "slug": "treetracker-web-map-core-rn",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app_icon_1024.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/app_icon_1024.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "androidStatusBar": {
-    "backgroundColor": "#feee",
-    "barStyle": "dark-content",
-    "translucent": true,
-    "hidden": false
+      "backgroundColor": "#feee",
+      "barStyle": "dark-content",
+      "translucent": true,
+      "hidden": false
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,9 +25,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/app_icon_1024.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.treetracker.greenstand",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

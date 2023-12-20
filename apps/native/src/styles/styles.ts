@@ -26,5 +26,6 @@ export const sharedStyles: SharedStyles = {
   avatar: {
     width: 48,
     height: 48,
+    borderRadius: 24,
   },
 };
