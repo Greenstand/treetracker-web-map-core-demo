@@ -186,6 +186,16 @@ export default function Home() {
     setOpen(!open);
   };
 
+  const [lg, set_lg] = useState(window.innerWidth >= 787);
+  const [xl, set_xl] = useState(window.innerWidth >= 1250);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      set_lg(window.innerWidth >= 787);
+      set_xl(window.innerWidth >= 1250);
+    });
+  }, []);
+
   return (
     <div>
       <Head>
@@ -194,7 +204,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar user={user} open={open} toggleDrawer={toggleDrawer} />
-      <main>
+      <main
+        style={{
+          position: 'fixed',
+          top: lg ? '0' : open ? '10vh' : '0',
+          left: xl
+            ? open
+              ? 'calc(30vw + 6px)'
+              : '0'
+            : lg
+            ? open
+              ? 'calc(45vw + 6px)'
+              : '0'
+            : open
+            ? 'calc(70vw + 6px)'
+            : '0',
+          bottom: '0',
+          width: '100vw',
+          overflowY: 'scroll',
+          borderLeft: open ? '3px solid lightgrey' : 'none',
+          transition: 'all 0.3s',
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -342,10 +373,11 @@ export default function Home() {
         <Paper
           sx={{
             position: 'fixed',
-            bottom: 0,
+            bottom: open ? '-300px' : 0,
             left: 0,
             right: 0,
             height: 90,
+            transition: 'all 0.3s',
           }}
           elevation={0}
         >
