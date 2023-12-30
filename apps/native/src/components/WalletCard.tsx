@@ -32,7 +32,10 @@ export default function WalletCard({
                 color: active === id ? theme.colors.white : theme.colors.black,
               },
             ]}>
-            Token: {balance}
+            Token:{" "}
+            {Number(balance.toFixed(2)).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+            })}
           </Text>
           <Text
             style={[

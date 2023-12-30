@@ -16,6 +16,7 @@ import {
 import { useRecoilState } from "recoil";
 
 import BottomNavigation from "./BottomNavigation";
+import { IMAGES } from "../../assets";
 import {
   ArrowLeft,
   CreditCard,
@@ -61,7 +62,7 @@ function CustomDrawer(props: any) {
           </TouchableOpacity>
         </View>
         <View style={drawerStyle.itemContainer}>
-          <Image source={{ uri: profileURI }} style={profileStyle.image} />
+          <Image source={IMAGES[1]} style={profileStyle.image} />
           <Text
             style={
               profileStyle.txtMajor

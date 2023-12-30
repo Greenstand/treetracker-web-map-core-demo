@@ -3,6 +3,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import { NotificationIcon, SearchIcon } from "./Icons";
+import { IMAGES } from "../../assets";
 import { sharedStyles } from "../styles/styles";
 import theme from "../utils/theme";
 
@@ -18,7 +19,7 @@ export default function WalletSummary({
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <Image source={{ uri: avatar }} style={sharedStyles.avatar} />
+        <Image source={IMAGES[1]} style={sharedStyles.avatar} />
       </TouchableOpacity>
       <View style={styles.wrapper}>
         <Text
@@ -30,7 +31,12 @@ export default function WalletSummary({
           ]}>
           Total balance
         </Text>
-        <Text style={[styles.text, styles.font]}>Token {balance}</Text>
+        <Text style={[styles.text, styles.font]}>
+          Token{" "}
+          {Number(balance.toFixed(2)).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+          })}
+        </Text>
       </View>
       <View style={styles.iconsContainer}>
         <SearchIcon size={28} />
