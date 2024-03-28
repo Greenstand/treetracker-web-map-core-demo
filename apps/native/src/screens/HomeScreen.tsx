@@ -16,7 +16,10 @@ import {
   Platform,
   SafeAreaView,
   TouchableOpacity,
+  Text,
 } from "react-native";
+import { Placement } from "react-native-tooltip-2";
+import Tooltip from "react-native-tooltip-2/build/dist/Tooltip";
 import { useRecoilState } from "recoil";
 
 import TransactionCard from "../components/TransactionCard";
@@ -46,7 +49,7 @@ export default function HomeScreen() {
   const tab = useTab<Wallet>(walletList.list);
   const transactionList = useTransactionList(tab.activeTabItem?.id);
   const [activeItem, setActiveItem] = useState<string>("");
-
+  const [toolTipVisible, setToolTipVisible] = useState(true);
   const [expoPushToken, setExpoPushToken] = useState("");
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
@@ -68,6 +71,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     setArr([...imgArr]);
+
     registerForPushNotificationsAsync().then((token: any) => {
       console.log(token, ": token registered");
       setExpoPushToken(token.data);
@@ -118,16 +122,16 @@ export default function HomeScreen() {
         projectId: Constants.expoConfig?.extra?.eas.projectId,
       });
     } else {
-      alert("Must use physical device for Push Notifications");
+      //alert("Must use physical device for Push Notifications");
     }
 
     if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
+      // Notifications.setNotificationChannelAsync("default", {
+      //   name: "default",
+      //   importance: Notifications.AndroidImportance.MAX,
+      //   vibrationPattern: [0, 250, 250, 250],
+      //   lightColor: "#FF231F7C",
+      // });
     }
 
     return token;
@@ -135,34 +139,6 @@ export default function HomeScreen() {
   useEffect(() => {
     setActiveItem(walletList.list[0]?.id);
   }, [walletList.list[0]?.id]);
-
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token: any) => {
-      console.log(token, ": token registered");
-      setExpoPushToken(token.data);
-    });
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-        console.log("Noti received:", notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("noti response received", response);
-        navigation.navigate("Notification", {
-          notification: response.notification,
-        });
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current,
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -178,17 +154,41 @@ export default function HomeScreen() {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={walletList?.list}
-        renderItem={({ item }: any) => (
-          <TouchableOpacity onPress={() => handleItemPress(item)}>
-            <WalletCard
-              createdAt={moment(item.createdAt).format("MMM DD, YYYY")}
-              balance={item.balance}
-              name={item.name}
-              active={activeItem}
-              id={item.id}
-            />
-          </TouchableOpacity>
-        )}
+        renderItem={({ item, index }: any) =>
+          index === 0 ? (
+            <Tooltip
+              isVisible={toolTipVisible}
+              content={<Text>Click me!</Text>}
+              placement={Placement.TOP}
+              onClose={() => setToolTipVisible(false)}
+              showChildInTooltip={false}
+              disableShadow
+              allowChildInteraction
+              useReactNativeModal={false}
+              accessible
+              topAdjustment={-(HEIGHT / 3)}>
+              <TouchableOpacity onPress={() => handleItemPress(item)}>
+                <WalletCard
+                  createdAt={moment(item.createdAt).format("MMM DD, YYYY")}
+                  balance={item.balance}
+                  name={item.name}
+                  active={activeItem}
+                  id={item.id}
+                />
+              </TouchableOpacity>
+            </Tooltip>
+          ) : (
+            <TouchableOpacity onPress={() => handleItemPress(item)}>
+              <WalletCard
+                createdAt={moment(item.createdAt).format("MMM DD, YYYY")}
+                balance={item.balance}
+                name={item.name}
+                active={activeItem}
+                id={item.id}
+              />
+            </TouchableOpacity>
+          )
+        }
         keyExtractor={(item): any => item.id}
         onEndReachedThreshold={0.2}
         initialNumToRender={10}
