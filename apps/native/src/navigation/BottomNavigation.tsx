@@ -4,7 +4,7 @@ import React from "react";
 import { HomeIcon, OfferIcon, TermIcon, WalletIcon } from "../components/Icons";
 import HomeScreen from "../screens/HomeScreen";
 import OfferScreen from "../screens/OfferScreen";
-import WalletScreen from "../screens/WalletScreen";
+import WalletsScreen from "../screens/WalletsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +31,7 @@ export default function BottomNavigation() {
             iconComponent = (
               <HomeIcon color={focused ? color : "gray"} size={31} />
             );
-          } else if (route.name === "Wallet") {
+          } else if (route.name === "Wallets") {
             iconComponent = (
               <WalletIcon color={focused ? color : "gray"} size={31} />
             );
@@ -50,7 +50,7 @@ export default function BottomNavigation() {
         tabBarInactiveTintColor: "#B3B4C3",
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Wallet" component={WalletScreen} />
+      <Tab.Screen name="Wallets" component={WalletsScreen} />
       <Tab.Screen name="Offer" component={OfferScreen} />
       <Tab.Screen name="Term" component={OfferScreen} />
     </Tab.Navigator>

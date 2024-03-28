@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackScreenProps } from "@react-navigation/stack";
 import useLoginForm from "demo-core/models/login/useLoginForm";
 import { User } from "demo-core/models/user/User";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import Tooltip, { Placement } from "react-native-tooltip-2";
 import { useRecoilState } from "recoil";
 
 import CustomInput from "../components/common/CustomInput";
@@ -41,6 +42,7 @@ export default function SignInScreen({
   const loginForm = useLoginForm();
   const [user, setUser] = useRecoilState(currentUser);
   const { signIn } = useAuth();
+  const [toolTipVisible, setToolTipVisible] = useState(true);
 
   const handleSubmit = () => {
     loginForm.handleSubmit(async (user: User) => {
@@ -53,6 +55,11 @@ export default function SignInScreen({
       }
     });
   };
+
+  useEffect(() => {
+    loginForm.handleNameChange("admin");
+    loginForm.handlePasswordChange("admin");
+  }, []);
 
   return (
     <SafeAreaView
@@ -83,13 +90,24 @@ export default function SignInScreen({
           errorMessage={loginForm.passwordError}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        {loginForm.isSubmitting ? (
-          <ActivityIndicator size="small" color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>Sign In </Text>
-        )}
-      </TouchableOpacity>
+      <Tooltip
+        isVisible={toolTipVisible}
+        content={<Text>Click me!</Text>}
+        placement={Placement.TOP}
+        onClose={() => setToolTipVisible(false)}
+        showChildInTooltip={false}
+        disableShadow
+        allowChildInteraction
+        useReactNativeModal={false}
+        accessible>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          {loginForm.isSubmitting ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Sign In </Text>
+          )}
+        </TouchableOpacity>
+      </Tooltip>
       <View style={styles.wrapper}>
         <PressableOpacity
           style={styles.pressable}

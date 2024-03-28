@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -26,6 +27,7 @@ import {
   Logout,
   RefreshCcw,
 } from "../components/Icons";
+import { useAuth } from "../context/AuthContext";
 import PasswordScreen from "../screens/PasswordScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import TransactionScreen from "../screens/TransactionScreen";
@@ -36,6 +38,17 @@ import theme from "../utils/theme";
 function CustomDrawer(props: any) {
   const [user] = useRecoilState(currentUser);
   const profileURI = user?.avatar;
+  const { signOut } = useAuth();
+
+  async function handleSignOut() {
+    try {
+      await AsyncStorage.setItem("userToken", "");
+      signOut();
+    } catch (e) {
+      // saving error
+      console.log(e);
+    }
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: "grey" }}>
@@ -57,7 +70,7 @@ function CustomDrawer(props: any) {
           <Text style={headerStyle.text}>Profile</Text>
           <TouchableOpacity
             style={headerStyle.icon}
-            onPress={() => alert("this is logout button")}>
+            onPress={() => handleSignOut()}>
             <Logout />
           </TouchableOpacity>
         </View>
@@ -85,7 +98,6 @@ export default function DrawerNavigation() {
   const navigation = useNavigation<any>();
   return (
     <Drawer.Navigator
-      useLegacyImplementation
       screenOptions={({ route }) => ({
         headerShown: false,
         drawerLabelStyle: { fontSize: 18, fontWeight: "bold" },

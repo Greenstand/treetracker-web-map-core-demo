@@ -7,7 +7,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: "treetracker-web-map-core-rn",
   extra: {
     eas: {
-      projectId: process.env.PROJECT_ID,
+      projectId: process.env.REACT_APP_PROJECT_ID,
     },
   },
 });
