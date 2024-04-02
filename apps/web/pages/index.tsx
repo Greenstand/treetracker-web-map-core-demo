@@ -96,7 +96,7 @@ const Home: NextPage = () => {
                   open={true}
                   arrow
                   title="User name: admin, pwd: admin"
-                  placement="top"
+                  placement="top-end"
                 >
                   <Typography variant="subtitle2">Name</Typography>
                 </Tooltip>
