@@ -101,7 +101,9 @@ export default function HomeScreen() {
 
   const handleItemPress = (item: any) => {
     setActiveItem(item.id);
-    navigation.navigate("Wallet");
+    navigation.navigate("Wallet", {
+      userWalletName: item.name,
+    });
   };
 
   async function registerForPushNotificationsAsync() {
