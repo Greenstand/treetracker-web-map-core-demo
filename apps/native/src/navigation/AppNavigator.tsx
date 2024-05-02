@@ -2,10 +2,17 @@ import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import useTransferWizard from "demo-core/models/transfer/useTransferWizard";
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  Button,
+  Pressable,
+} from "react-native";
 
 import BottomNavigation from "./BottomNavigation";
 import DrawerNavigation from "./DrawerNavigation";
+import CustomHeader from "../components/CustomHeader";
 import { ArrowLeft } from "../components/Icons";
 import { useAuth } from "../context/AuthContext";
 import NotificationScreen from "../screens/NotificationScreen";
@@ -118,28 +125,32 @@ const AppNavigator = () => {
           <Stack.Screen
             name="Wallet"
             component={WalletScreen}
-            options={{
+            options={(props: any) => ({
               headerShown: true,
-              title: "Wallet",
+              headerTitle: () => (
+                <CustomHeader {...props} {...navHeaderStyle} />
+              ),
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                   <ArrowLeft />
                 </TouchableOpacity>
               ),
+
               headerRight: () =>
                 transferWizard.isTransferable ? (
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("Transfer")}
-                    style={{ backgroundColor: "black", padding: 3 }}>
+                  <Pressable
+                    style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
+                    onPress={() => navigation.navigate("Transfer")}>
                     <Text
                       style={{
-                        color: `${visible ? "#3FDEAE" : "black"}`,
+                        color: theme.colors.main,
+                        ...navHeaderStyle.headerTitleRightStyle,
                       }}>
                       Transfer
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 ) : null,
-            }}
+            })}
           />
           <Stack.Screen
             name="Password"
@@ -175,13 +186,13 @@ const AppNavigator = () => {
   );
 };
 
-const navHeaderStyle = StyleSheet.create({
+export const navHeaderStyle = StyleSheet.create({
   headerStyle: {
     backgroundColor: theme.colors.grayWhite,
   },
   headerTitleStyle: {
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 22,
   },
   headerLeftContainerStyle: {
     paddingLeft: 20,
@@ -191,6 +202,10 @@ const navHeaderStyle = StyleSheet.create({
   },
   headerTitleContainerStyle: {
     marginLeft: -20,
+  },
+  headerTitleRightStyle: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
 
