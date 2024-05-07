@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { RecoilRoot, useRecoilSnapshot } from 'recoil';
 import { useEffect } from 'react';
+import Head from 'next/head';
 
 const theme = createTheme({
   // spacing
@@ -122,6 +123,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <DebugObserver />
       <ThemeProvider theme={theme}>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=375, initial-scale=1, maximum-scale=1, user-scalable=no"
+          />
+        </Head>
         <Component {...pageProps} />
       </ThemeProvider>
     </RecoilRoot>
