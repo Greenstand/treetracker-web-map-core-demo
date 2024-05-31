@@ -5,22 +5,15 @@ import {
   Box,
   Card,
   CircularProgress,
-  Drawer,
   Paper,
   SvgIcon,
   Tooltip,
   Typography,
-  IconButton,
-  Stack,
-  Grid,
-  List,
-  ListItem,
   Container,
 } from '@mui/material';
 import Head from 'next/head';
 import NotificationIcon from '../images/Notification.svg';
 import SearchIcon from '../images/Search.svg';
-import Profile from '../images/profile.png';
 import ArrowIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '../images/home.svg';
 import V3Icon from '../images/v3.svg';
@@ -29,28 +22,17 @@ import OfferIcon from '../images/offer.svg';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import currentUser from '../states/currentUser';
-import { useEffect, useState } from 'react';
-import * as accounts from 'demo-core/models/api/accounts';
-import * as wallets from 'demo-core/models/api/wallets';
+import { useState } from 'react';
 import { Wallet } from 'demo-core/models/entities/Wallet';
-import { Transaction } from 'demo-core/models/entities/Transaction';
 import moment from 'moment';
 import MapIcon from '@mui/icons-material/Map';
 import Link from 'next/link';
 import useTransactionList from 'demo-core/models/transaction/useTransactionList';
-import { tr } from '@faker-js/faker';
 import useBalance from 'demo-core/models/user/useBalance';
 import useWalletList from 'demo-core/models/wallet/useWalletList';
 import useTab from 'demo-core/models/common/useTab';
 
-import CloseRoundedIcon from '../images/Close.svg';
-import LogoutRoundedIcon from '../images/Logout.svg';
-import HistoryRoundedIcon from '../images/History.svg';
-import WalletRoundedIcon from '../images/Wallet.svg';
-import PasswordRoundedIcon from '../images/Key.svg';
-import SettingsIcon from '../images/Settings.svg';
 import Navbar from '../components/Navbar';
-import Wrapper from '../components/Wrapper';
 
 function TransactionComponent({ transaction }) {
   return (
@@ -195,182 +177,180 @@ export default function Home() {
         <meta name="description" content="Home page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Navbar user={user} open={open} toggleDrawer={toggleDrawer} />
       <main>
-        <Wrapper>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            marginTop: 8,
+            paddingLeft: 7,
+            paddingRight: 7,
+          }}
+        >
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent: 'flex-start',
               flexDirection: 'row',
               width: '100%',
-              marginTop: 8,
-              paddingLeft: 7,
-              paddingRight: 7,
             }}
           >
+            <Avatar
+              src={user.avatar}
+              sx={{
+                width: 49,
+                height: 49,
+                marginRight: 3,
+              }}
+              onClick={toggleDrawer}
+            />
             <Box
               sx={{
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                flexDirection: 'row',
-                width: '100%',
+                flexDirection: 'column',
               }}
             >
-              <Avatar
-                src={user.avatar}
+              <Typography
+                variant="h1"
                 sx={{
-                  width: 49,
-                  height: 49,
-                  marginRight: 3,
+                  fontSize: '14px',
                 }}
-                onClick={toggleDrawer}
+              >
+                Total Balance
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '22px',
+                  fontWeight: '600',
+                  marginTop: 0.8,
+                }}
+                variant="h2"
+              >
+                Token {balance && balance.toLocaleString()}
+              </Typography>
+            </Box>
+          </Box>
+          <SvgIcon
+            component={SearchIcon}
+            sx={{
+              width: 28,
+              height: 28,
+            }}
+            viewBox="0 0 28 28"
+          />
+          <SvgIcon
+            component={NotificationIcon}
+            sx={{
+              width: 28,
+              height: 30,
+              marginLeft: 7,
+            }}
+            viewBox="0 0 28 30"
+          />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            width: '100%',
+            marginTop: 9.5,
+            paddingLeft: 7,
+            paddingRight: 7,
+          }}
+        >
+          <Typography variant="h5">Wallets</Typography>
+          <ArrowIcon />
+        </Box>
+        <Box
+          sx={{
+            marginTop: 9,
+            display: 'flex',
+            flexDirection: 'row',
+            wrap: 'nowrap',
+            overflow: 'auto',
+            overflowX: 'scroll',
+          }}
+        >
+          {!walletList.isWalletLoading &&
+            walletList.list.map((wallet, index) => (
+              <WalletCard
+                wallet={wallet}
+                active={wallet.id === tab.activeTabItem.id}
+                handleClick={() => tab.setActiveTabIndex(index)}
               />
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <Typography
-                  variant="h1"
-                  sx={{
-                    fontSize: '14px',
-                  }}
-                >
-                  Total Balance
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginTop: 0.8,
-                  }}
-                  variant="h2"
-                >
-                  Token {balance && balance.toLocaleString()}
-                </Typography>
-              </Box>
-            </Box>
-            <SvgIcon
-              component={SearchIcon}
-              sx={{
-                width: 28,
-                height: 28,
-              }}
-              viewBox="0 0 28 28"
-            />
-            <SvgIcon
-              component={NotificationIcon}
-              sx={{
-                width: 28,
-                height: 30,
-                marginLeft: 7,
-              }}
-              viewBox="0 0 28 30"
-            />
-          </Box>
+            ))}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            width: '100%',
+            marginTop: 9.5,
+            paddingLeft: 7,
+            paddingRight: 7,
+          }}
+        >
+          <Typography variant="h5">Last Transactions</Typography>
+          <ArrowIcon />
+        </Box>
+        {transactionList.isTransactionLoading && (
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexDirection: 'row',
               width: '100%',
-              marginTop: 9.5,
-              paddingLeft: 7,
-              paddingRight: 7,
-            }}
-          >
-            <Typography variant="h5">Wallets</Typography>
-            <ArrowIcon />
-          </Box>
-          <Box
-            sx={{
               marginTop: 9,
-              display: 'flex',
-              flexDirection: 'row',
-              wrap: 'nowrap',
-              overflow: 'auto',
-              overflowX: 'scroll',
-            }}
-          >
-            {!walletList.isWalletLoading &&
-              walletList.list.map((wallet, index) => (
-                <WalletCard
-                  wallet={wallet}
-                  active={wallet.id === tab.activeTabItem.id}
-                  handleClick={() => tab.setActiveTabIndex(index)}
-                />
-              ))}
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              width: '100%',
-              marginTop: 9.5,
               paddingLeft: 7,
               paddingRight: 7,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <Typography variant="h5">Last Transactions</Typography>
-            <ArrowIcon />
+            <CircularProgress />
           </Box>
-          {transactionList.isTransactionLoading && (
-            <Box
+        )}
+        {!transactionList.isTransactionLoading &&
+          transactionList.list?.map((transaction, index) => (
+            <Box>
+              <TransactionComponent transaction={transaction} />
+            </Box>
+          ))}
+        <Container
+          maxWidth="xs"
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 80,
+          }}
+        >
+          <Paper elevation={0}>
+            <BottomNavigation
+              value={'Recents'}
               sx={{
-                width: '100%',
-                marginTop: 9,
-                paddingLeft: 7,
-                paddingRight: 7,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                height: 90,
+                '& svg': {
+                  width: 31,
+                  height: 31,
+                },
               }}
             >
-              <CircularProgress />
-            </Box>
-          )}
-          {!transactionList.isTransactionLoading &&
-            transactionList.list?.map((transaction, index) => (
-              <Box>
-                <TransactionComponent transaction={transaction} />
-              </Box>
-            ))}
-          <Container
-            maxWidth="xs"
-            sx={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 80,
-            }}
-          >
-            <Paper elevation={0}>
-              <BottomNavigation
-                value={'Recents'}
-                sx={{
-                  height: 90,
-                  '& svg': {
-                    width: 31,
-                    height: 31,
-                  },
-                }}
-              >
-                <BottomNavigationAction label="Recents" icon={<HomeIcon />} />
-                <BottomNavigationAction label="v3" icon={<V3Icon />} />
-                <BottomNavigationAction label="v4" icon={<V4Icon />} />
-                <BottomNavigationAction label="offer" icon={<OfferIcon />} />
-              </BottomNavigation>
-            </Paper>
-          </Container>
-        </Wrapper>
+              <BottomNavigationAction label="Recents" icon={<HomeIcon />} />
+              <BottomNavigationAction label="v3" icon={<V3Icon />} />
+              <BottomNavigationAction label="v4" icon={<V4Icon />} />
+              <BottomNavigationAction label="offer" icon={<OfferIcon />} />
+            </BottomNavigation>
+          </Paper>
+        </Container>
       </main>
     </div>
   );

@@ -3,22 +3,17 @@ import Head from 'next/head';
 import {
   Button,
   CircularProgress,
-  Container,
   SvgIcon,
   TextField,
   Tooltip,
 } from '@mui/material';
-import { Paper, Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar } from '@mui/material';
 import UserSvg from '../images/user.svg';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import currentUser from '../states/currentUser';
 import { User } from 'demo-core/models/user/User';
-import react from 'react';
 import useLoginForm from 'demo-core/models/login/useLoginForm';
-import Wrapper from '../components/Wrapper';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -39,139 +34,135 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Wrapper>
+        <Box
+          sx={{
+            padding: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '100vh',
+          }}
+        >
           <Box
             sx={{
-              padding: 6,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              height: '100vh',
+              width: '100%',
             }}
           >
             <Box
               sx={{
-                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
               }}
             >
-              <Box
+              <Typography
+                variant="h5"
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
+                  marginTop: '3rem',
                 }}
               >
-                <Typography
-                  variant="h5"
+                Sign In
+              </Typography>
+              <Avatar
+                sx={{
+                  width: 104,
+                  height: 104,
+                  marginTop: '1.7rem',
+                  backgroundColor: '#F3F6FF',
+                }}
+              >
+                {/* MUI SVG Icon */}
+                <SvgIcon
+                  component={UserSvg}
                   sx={{
-                    marginTop: '3rem',
+                    width: 49,
+                    height: 49,
                   }}
+                  viewBox="0 0 49 49"
+                />
+              </Avatar>
+              <Box
+                sx={{
+                  width: '100%',
+                  marginTop: 13,
+                }}
+              >
+                <Tooltip
+                  open={true}
+                  arrow
+                  title="User name: admin, pwd: admin"
+                  placement="top"
                 >
-                  Sign In
-                </Typography>
-                <Avatar
+                  <Typography variant="subtitle2">Name</Typography>
+                </Tooltip>
+                <TextField
                   sx={{
-                    width: 104,
-                    height: 104,
-                    marginTop: '1.7rem',
+                    width: '100%',
+                    marginTop: '0.5rem',
+                    fontSize: '0.9rem',
                     backgroundColor: '#F3F6FF',
                   }}
-                >
-                  {/* MUI SVG Icon */}
-                  <SvgIcon
-                    component={UserSvg}
-                    sx={{
-                      width: 49,
-                      height: 49,
-                    }}
-                    viewBox="0 0 49 49"
-                  />
-                </Avatar>
-                <Box
+                  variant="outlined"
+                  placeholder="Enter your name"
+                  value={loginForm.name}
+                  onChange={(e) => loginForm.handleNameChange(e.target.value)}
+                  error={!!loginForm.nameError}
+                  helperText={loginForm.nameError}
+                />
+              </Box>
+              <Box
+                sx={{
+                  width: '100%',
+                  marginTop: 8,
+                }}
+              >
+                <Typography variant="subtitle2">Password</Typography>
+                <TextField
                   sx={{
                     width: '100%',
-                    marginTop: 13,
+                    marginTop: '0.5rem',
+                    fontSize: '0.9rem',
+                    backgroundColor: '#F3F6FF',
                   }}
-                >
-                  <Tooltip
-                    open={true}
-                    arrow
-                    title="User name: admin, pwd: admin"
-                    placement="top"
-                  >
-                    <Typography variant="subtitle2">Name</Typography>
-                  </Tooltip>
-                  <TextField
-                    sx={{
-                      width: '100%',
-                      marginTop: '0.5rem',
-                      height: 60,
-                      fontSize: '0.9rem',
-                      backgroundColor: '#F3F6FF',
-                    }}
-                    variant="outlined"
-                    placeholder="Enter your name"
-                    value={loginForm.name}
-                    onChange={(e) => loginForm.handleNameChange(e.target.value)}
-                    error={!!loginForm.nameError}
-                    helperText={loginForm.nameError}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    width: '100%',
-                    marginTop: 8,
-                  }}
-                >
-                  <Typography variant="subtitle2">Password</Typography>
-                  <TextField
-                    sx={{
-                      width: '100%',
-                      marginTop: '0.5rem',
-                      height: 60,
-                      fontSize: '0.9rem',
-                      backgroundColor: '#F3F6FF',
-                    }}
-                    variant="outlined"
-                    placeholder="*******"
-                    type="password"
-                    value={loginForm.password}
-                    onChange={(e) =>
-                      loginForm.handlePasswordChange(e.target.value)
-                    }
-                    error={!!loginForm.passwordError}
-                    helperText={loginForm.passwordError}
-                  />
-                </Box>
+                  variant="outlined"
+                  placeholder="*******"
+                  type="password"
+                  value={loginForm.password}
+                  onChange={(e) =>
+                    loginForm.handlePasswordChange(e.target.value)
+                  }
+                  error={!!loginForm.passwordError}
+                  helperText={loginForm.passwordError}
+                />
               </Box>
             </Box>
-            <Button
-              sx={{
-                width: '100%',
-                marginBottom: 2,
-                height: 60,
-                color: '#fff',
-              }}
-              variant="contained"
-              disableElevation
-              onClick={(e) =>
-                loginForm.handleSubmit((user: User) => {
-                  console.log('user:', user);
-                  setUser(user);
-                  router.push('/home');
-                })
-              }
-            >
-              {loginForm.isSubmitting ? (
-                <CircularProgress color="inherit" />
-              ) : (
-                'Continue'
-              )}
-            </Button>
           </Box>
-        </Wrapper>
+          <Button
+            sx={{
+              width: '100%',
+              marginBottom: 2,
+              height: 60,
+              color: '#fff',
+            }}
+            variant="contained"
+            disableElevation
+            onClick={(e) =>
+              loginForm.handleSubmit((user: User) => {
+                console.log('user:', user);
+                setUser(user);
+                router.push('/home');
+              })
+            }
+          >
+            {loginForm.isSubmitting ? (
+              <CircularProgress color="inherit" />
+            ) : (
+              'Continue'
+            )}
+          </Button>
+        </Box>
       </main>
     </div>
   );

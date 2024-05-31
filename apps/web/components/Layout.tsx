@@ -1,10 +1,10 @@
 import { Container } from '@mui/material';
 import React from 'react';
 
-type ChildrenProps = {
+type Props = {
   children?: React.ReactNode;
 };
 
-export default function Wrapper(props: ChildrenProps) {
+export default function Layout(props: Props) {
   return <Container maxWidth="xs">{props.children}</Container>;
 }
