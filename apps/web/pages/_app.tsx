@@ -8,6 +8,29 @@ import { useEffect } from 'react';
 const theme = createTheme({
   // spacing
   spacing: 4,
+  shadows: [
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+  ],
   palette: {
     primary: {
       main: '#3FDEAE',
@@ -20,8 +43,15 @@ const theme = createTheme({
     MuiBackdrop: {
       styleOverrides: {
         root: {
-          backgroundColor: 'transparent',
-          backdropFilter: 'blur(5px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.5)',
+          backdropFilter: 'blur(4px)',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
         },
       },
     },
