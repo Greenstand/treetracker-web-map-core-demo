@@ -60,14 +60,21 @@ const Home: NextPage = () => {
                 justifyContent: 'flex-start',
               }}
             >
-              <Typography
-                variant="h5"
-                sx={{
-                  marginTop: '3rem',
-                }}
+              <Tooltip
+                open={true}
+                arrow
+                title="This is a mobile app, please use mobile screen to check it."
+                placement="top"
               >
-                Sign In
-              </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    marginTop: '3rem',
+                  }}
+                >
+                  Sign In
+                </Typography>
+              </Tooltip>
               <Avatar
                 sx={{
                   width: 104,
