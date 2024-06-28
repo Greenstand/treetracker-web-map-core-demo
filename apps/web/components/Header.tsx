@@ -36,6 +36,7 @@ export default function Header({
       <Box>
         <Typography variant="h6" color="primary">
           {forwardLink instanceof Function ? (
+            // @ts-ignore
             <Button sx={{ textTransform: 'none' }} onClick={forwardLink}>
               {forwardText}
             </Button>
