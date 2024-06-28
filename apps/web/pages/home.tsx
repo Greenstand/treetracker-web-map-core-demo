@@ -166,6 +166,7 @@ function WalletCard({ wallet, active, handleClick }) {
 
 export default function Home() {
   const [user, setUser] = useRecoilState(currentUser);
+  const [open, setOpen] = useState(false);
   console.log('home user:', user);
   const balance = useBalance(user?.userId);
   const walletList = useWalletList(user?.userId);
@@ -179,8 +180,6 @@ export default function Home() {
       </div>
     );
   }
-
-  const [open, setOpen] = useState(false);
 
   const toggleDrawer = () => {
     setOpen(!open);
