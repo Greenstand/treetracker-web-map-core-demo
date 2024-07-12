@@ -6,17 +6,18 @@ import {
   SvgIcon,
   TextField,
   Tooltip,
-  useMediaQuery,
+  Paper,
+  Box,
+  Typography,
+  Avatar,
+  useMediaQuery
 } from '@mui/material';
-import { Paper, Box, Typography, Avatar } from '@mui/material';
 import UserSvg from '../images/user.svg';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import currentUser from '../states/currentUser';
 import { User } from 'demo-core/models/user/User';
-import react from 'react';
 import useLoginForm from 'demo-core/models/login/useLoginForm';
 
 const Home: NextPage = () => {
